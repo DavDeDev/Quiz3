@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    tools{
+            maven 'MAVEN3'
+    }
     triggers {
            cron('* * * * 1') // Run every minute on Mondays
 //         cron('H H * * 1') // Run every 10 minutes on Mondays
@@ -10,7 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'mvn clean install'
+                    bat 'mvn clean install'
                 }
             }
         }
@@ -19,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // Jacoco setup and execution
-                    sh 'mvn jacoco:prepare-agent test jacoco:report'
+                    bat 'mvn jacoco:prepare-agent test jacoco:report'
                 }
             }
         }
