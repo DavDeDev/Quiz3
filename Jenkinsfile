@@ -4,8 +4,8 @@ pipeline {
             maven 'MAVEN3'
     }
     triggers {
-           cron('* * * * 1') // Run every minute on Mondays
-//         cron('H H * * 1') // Run every 10 minutes on Mondays
+//            cron('* * * * 1') // Run every minute on Mondays
+        cron('H H * * 1') // Run every 10 minutes on Mondays
     }
 
     stages {
@@ -29,11 +29,11 @@ pipeline {
 
     post {
             success {
-                echo 'Pipeline succeeded! Add any additional success steps here.'
+                echo 'Pipeline succeeded!'
             }
 
             failure {
-                echo 'Pipeline failed! Add any additional failure steps here.'
+                echo 'Pipeline failed!'
             }
         }
 }
