@@ -5,7 +5,7 @@ pipeline {
     }
     triggers {
 //            cron('* * * * 1') // Run every minute on Mondays
-        cron('H H * * 1') // Run every 10 minutes on Mondays
+                cron('H/10 * * * 1') // Run every 10 minutes on Mondays
     }
 
     stages {
@@ -17,14 +17,20 @@ pipeline {
             }
         }
 
-        stage('Code Coverage') {
-            steps {
-                script {
-                    // Jacoco setup and execution
-                    bat 'mvn jacoco:prepare-agent test jacoco:report'
+        stage('Test with JaCoCo') {
+                    steps {
+                        script {
+                            // Run Maven build and generate JaCoCo report
+                            bat 'mvn clean verify jacoco:report'
+                        }
+                    }
                 }
-            }
-        }
+
+                stage('Publish JaCoCo Report') {
+                    steps {
+                        jacoco execPattern: '**/target/jacoco.exec', classPattern: '**/classes', sourcePattern: '**/src/main/java'
+                    }
+                }
     }
 
     post {
