@@ -26,10 +26,12 @@ pipeline {
     }
 
     post {
-        success {
-        }
+            success {
+                echo 'Pipeline succeeded! Add any additional success steps here.'
+            }
 
-        failure {
+            failure {
+                echo 'Pipeline failed! Add any additional failure steps here.'
+            }
         }
-    }
 }
